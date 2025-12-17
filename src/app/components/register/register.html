@@ -1,0 +1,123 @@
+<section>
+    <div class="container">
+       
+        <div class="p-4">
+            <form 
+                (submit)="registerData(registerForm)" 
+                [formGroup]="registerForm" 
+                class="flex flex-col gap-1 p-3 items-center justify-center">
+
+                <div class="overview sm:w-1/2 w-full">
+                    <h1 class="text-4xl mb-2">Sign Up</h1>
+                    <p class="text-lg">Please, fill in this form to sign up</p>
+                </div>
+
+                <!--name-->
+                <div class="sm:w-1/2 w-full">
+                    <input type="text" formControlName="name" class="border-b-2 border-b-main p-3 my-2 rounded-md w-full block min-w-0 grow  outline-gray-300  bg-white text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" placeholder="Enter Your Name">
+                    @if (registerForm.get('name')?.errors&&registerForm.get('name')?.touched) {
+                        <div class="text-red-950 bg-red-100  p-3 my-2 rounded-md ">
+                            @if(registerForm.get('name')?.getError('required')){
+                                <p>First Name is Required</p>
+                            }
+                            @if(registerForm.get('name')?.hasError('minlength')){
+                                <p>Minimum length is 4 letter</p>
+                            }
+                            @if(registerForm.get('name')?.hasError('maxlength')){
+                                <p>max length is 50 letter</p>
+                            }
+                        </div>
+                    }
+                </div>
+               <!--phone-->
+                <div class="sm:w-1/2 w-full">
+                    <input type="text" pattern="[0-1]{1}[0-9]{10}" formControlName="phone" class="border-b-2 border-b-main p-3 my-2 rounded-md w-full block min-w-0 grow  outline-gray-300  bg-white text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" placeholder="Phone">
+                    @if (registerForm.get('phone')?.errors&&registerForm.get('phone')?.touched) {
+                        <div class="text-red-950 bg-red-100  p-3 my-2 rounded-md ">
+                            @if(registerForm.get('phone')?.getError('pattern')){
+                                <p>You should write only numbers and 11 .</p>
+                            }
+                            @if(registerForm.get('phone')?.hasError('minlength')){
+                                <p>Minimum length is 10 numbers</p>
+                            }
+                            @if(registerForm.get('phone')?.hasError('maxlength')){
+                                <p>max length is 15 numbers</p>
+                            }
+                        </div>
+                    }
+                </div>
+                <!--role-->
+                <h4 class="text-2xl py-0.5 sm:w-1/2 w-full">What's Your Role ?</h4>
+                 <div class="sm:w-1/2 w-full flex flex-col sm:flex-row gap-0.5 sm:gap-2 py-1.5">
+                    
+  
+                    <input type="radio" id="Client" name="role" value="client" name="role" formControlName="role" checked />
+                    <label for="Client">Client</label><br>
+                    <input type="radio" id="Photographer" name="role" value="photographer" name="role" formControlName="role" />
+                    <label for="Photographer">Photographer</label><br>
+                    <input type="radio" id="Admin" name="role" value="admin" name="role" formControlName="role" />
+                    <label for="Admin">Admin</label><br>
+                    
+                   
+                </div>
+                 @if (registerForm.get('role')?.errors&&registerForm.get('email')?.touched) {
+                        <div class="text-red-950 bg-red-100  p-3 my-2 rounded-md w-1/2">
+                            @if(registerForm.get('role')?.getError('required')){
+                                <p>Please Select Role It's Redquired</p>
+                            }
+                        </div>
+                    }
+                <!--email-->
+                <div class="sm:w-1/2 w-full">
+                    <input type="text" formControlName="email" class="border-b-2 border-b-main p-3 my-2 rounded-md w-full block min-w-0 grow  outline-gray-300  bg-white text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" placeholder="Your@example.com">
+                    @if (registerForm.get('email')?.errors&&registerForm.get('email')?.touched) {
+                        <div class="text-red-950 bg-red-100  p-3 my-2 rounded-md ">
+                            @if(registerForm.get('email')?.getError('required')){
+                                <p>Email is Required</p>
+                            }
+                            @if(registerForm.get('email')?.getError('email')){
+                                <p>Invalid email format</p>
+                            }
+                            
+                        </div>
+                    }
+                </div>
+                <!--password-->
+                <div class="sm:w-1/2 w-full">
+                    <input type="password" formControlName="password" class="border-b-2 border-b-main p-3 my-2 rounded-md w-full block min-w-0 grow  outline-gray-300  bg-white text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" placeholder="Password">
+                    @if (registerForm.get('password')?.errors&&registerForm.get('password')?.touched) {
+                        <div class="text-red-950 bg-red-100  p-3 my-2 rounded-md ">
+                            @if(registerForm.get('password')?.getError('required')){
+                                <p>Password is Required</p>
+                            }
+                           @if(registerForm.get('password')?.getError('minlength')){
+                                <p>Minimum Password is 8 digits </p>
+                            }
+                            
+                        </div>
+                    }
+                </div>
+                <!--confirm pass-->
+                 <div class="sm:w-1/2 w-full">
+                    <input type="password" formControlName="confirmPassword" class="border-b-2 border-b-main p-3 my-2 rounded-md w-full block min-w-0 grow  outline-gray-300  bg-white text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" placeholder="Confirm Password">
+                    @if (registerForm.get('confirmPassword')?.touched&&passwordMismatch) {
+                        <div class="text-red-950 bg-red-100  p-3 my-2 rounded-md ">
+                            @if(registerForm.get('confirmPassword')?.getError('required')){
+                                <p>Confirm Password is Required</p>
+                            }
+                            @if(passwordMismatch){
+                            <p>Passwords do not match</p>
+                        }
+                            
+                        </div>
+                    }
+                </div>
+                
+                <!--button submit-->
+                <button class="bg-main rounded-md p-2 sm:w-1/2 w-full  cursor-pointer" type="submit" [disabled]="registerForm.invalid">
+                    Sign Up
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
